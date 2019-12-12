@@ -8,7 +8,7 @@ Actually, there is a reason for that: Pods are **ephemeral** in nature. For exam
 
 A `Service` object has it's own IP, DNS and Port and they **never** change. It enables you to access pods through the mechanism of `selectors` and `labels`.
 
-<img src="https://github.com/actfong/k8s-workshop/blob/master/images/k8s-service.png?raw=true" width="800" height="700"/>
+<img src="images/k8s-service.png" width="800" height="700"/>
 
 #### Service Types [ClusterIP, NodePort, LoadBalancer]
 There are several [types of Services](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types). The default value is `ClusterIP`, which only exposes your Service internally.
@@ -17,9 +17,9 @@ A Service of type `NodePort` exposes the Service object on the Node's IP at a sp
 
 If you are running your cluster on the cloud, you could consider the type `LoadBalancer`, which exposes your Service on your cloud provider's load-balancer. However, how the type `LoadBalancer` is implemented varies with each cloud provider.
 
-If you look back at the example we did in [Part 1](https://actfong.github.io/k8s-workshop/Part-1-IntroWithGKE#deploy-our-app), we actually created a service of Type `LoadBalancer`
+If you look back at the example we did in chapter 1, we actually created a service of Type `LoadBalancer`
 
-<img src="https://github.com/actfong/k8s-workshop/blob/master/images/k8s-service-types.png?raw=true" width="550" height="375"/>
+<img src="images/k8s-service-types.png" width="550" height="375"/>
 
 ### Manifest ###
 
@@ -30,20 +30,20 @@ Once created, a `nodePort` will be automatically assgined to a port in the range
 A key element to pay attention to in our manifest is the `selector`: it has to match the key-value of our Pods in order to reach our Pods.
 
 ```yml
-# service-example.yml
+# tasman-svc.yml
 apiVersion: v1
 kind: Service
 metadata:
-  name: tasman                         # name of your Service
-spec:                                  # defines what is in this resource
-  type: NodePort                       # ClusterIP by default (which is only accessible internally)
+  name: tasman                          # name of your Service
+spec:                                   # defines what is in this resource
+  type: NodePort
   ports:
-  - port: 8080                         # Allow Service access at this port
-    targetPort: 4567                   # Let your Service target a specific port of your Pods
-    # nodePort: 30001                  # Expose the Service object to the external world on a port of Node's IP (30000-32767)
-    # protocol: TCP                    # TCP by default
+  - port: 8080                          # Make you rervice object available on this port
+    targetPort: 4567                    # The targeted-pods have exposed this port
+    # nodePort: 30001                   # K8s will automatically map to a port 30000-32767
+    # protocol: TCP                     # TCP by default
   selector:
-    app: tasman                        # targets pods with label app=tasman
+    app: tasman
 ```
 
 A few attributes to pay special attention to:
@@ -67,7 +67,7 @@ And this will expose our service on 4567 and forward requests to Pod’s 4567 au
 
 With the manifest above, together with the Pod that you have previously spun up, you can now deploy your service object with:
 ```
-kubectl apply -f {service-manifest.yml}
+kubectl apply -f  tasman-svc.yml
 ```
 Once deployed, inspect the service object with `kubectl describe svc {svc-name}` and pay attention to the field `Endpoints`. Do you know which IPs it refers to?
 
@@ -99,18 +99,18 @@ But instead of that, we could also create an `Ingress` on top of our existing Se
 
 An `Ingress` maps incoming requests to Services, based on rules that you set.
 
-<img src="https://github.com/actfong/k8s-workshop/blob/master/images/k8s-ingress.png?raw=true" width="960" height="720"/>
+<img src="images/k8s-ingress.png" width="960" height="720"/>
 
 These rules are based on info such as the *path* or *host* from the incoming traffic. Examples can be found [here](https://cloud.google.com/container-engine/docs/tutorials/http-balancer#step_6_optional_serving_multiple_applications_on_a_load_balancer) and [here](https://kubernetes.io/docs/concepts/services-networking/ingress/#updating-an-ingress).
 
 For our purpose, we only need to forward our requests from our Ingress to our existing service called 'tasman'.
 
 ```
-# ingress-example.yml
-apiVersion: extensions/v1beta1
+# tasman-ingress.yml
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: tasman-ing
+  name: tasman
 spec:
   backend:
     serviceName: tasman
@@ -119,12 +119,12 @@ spec:
 
 And run:
 ```
-kubectl apply -f {manifest-file}
+kubectl apply -f tasman-ingress.yml
 ```
 
-Creating an Ingress could take a few minutes. You can see the progress on Google Cloud's `Kubernetes Engine -> Services` or `watch -d "kubectl describe ingress tasman-ing"`
+Creating an Ingress could take a few minutes. You can see the progress on Google Cloud's `Kubernetes Engine -> Services` or `watch -d "kubectl describe ingress tasman"`
 
-Once the Ingress is created, you can get the address from  `kubectl describe ingress {ingress-name}` and access your application.
+Once the Ingress is created, you can get the address from  `kubectl describe ingress tasman` and access your application.
 
 ---
 
@@ -140,4 +140,4 @@ An Ingress forwards (or terminates) incoming requests to services based on these
 
 Until now, we have only targeted one single pod with our Service object.
 
-In the next chapter, you will find out how we can ensure that a number of pod replica's are always running with [ReplicationControllers / ReplicaSets](https://actfong.github.io/k8s-workshop/Part-4-RC-and-RS). And the good news: all these replica's will be targeted by our Service object, automagically!
+In the next chapter, you will find out how we can ensure that a number of pod replica's are always running with a Deployment. And the good news: all these replica's will be targeted by our Service object, automagically!

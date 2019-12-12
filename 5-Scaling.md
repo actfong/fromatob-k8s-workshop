@@ -42,7 +42,7 @@ kubectl scale --replicas=6 --current-replicas=4 deploy/tasman
 #### Inspect your resource after scaling
 After scaling your Deployment, you can inspect your Deployment object with `kubectl describe` and pay attention to the `Events` section at the bottom. One of the messages should be that the ReplicaSet has been scaled.
 
-The `Replicas` attribute should have been updated as well to your new desired number of replicas. You could also inspect the `RS` to see which `Events` have occured after you perform the `kubectl scale` command.
+The `Replicas` attribute should have been updated as well to your new desired number of replicas. You could also inspect the `RS` to see which `Events` have occurred after you perform the `kubectl scale` command.
 
 And obviously, when you list pods with `kubectl get pods`, you should see the newly created Pods.
 
@@ -64,7 +64,7 @@ kubectl autoscale {resource-type}/{resource-name} --max={max-number-of-pods}
 
 # Let's apply the following to our Deployment tasman
 # By default, target cpu-utilization is set to 80%
-kubectl autoscale deploy/tasman --max=10  -min=3
+kubectl autoscale deploy/tasman --max=10 --min=3
 
 kubectl autoscale deploy/{deploy-name} --max={max-number-of-pods}  -min={min-number-of-pods}
 kubectl autoscale deploy/{deploy-name} --max={max-number-of-pods} --cpu-percent={target-CPU%}
@@ -112,11 +112,9 @@ spec:
   targetCPUUtilizationPercentage: 85
 ```
 
-...
-error message that you should see goes here:
-...
-
 After editing your HPA, you will see that the changes are applied to your `HPA` (check with `kubectl describe hpa tasman`). You will also see that the number of pods have changed to 4.
+
+What happens if we eventually run out of nodes?
 
 ---
 
@@ -132,8 +130,7 @@ After editing your HPA, you will see that the changes are applied to your `HPA` 
 
 Yes, this is it! By now, you should be *dangerous* enough to create a cluster for your containerized application, deploy updates (or rollbacks), scale it and make it accessible to the rest of the Internet!
 
-<img src="https://github.com/actfong/k8s-workshop/blob/master/images/dangerous.jpeg?raw=true" width="225" height="225"/>
-
+<img src="images/dangerous.jpeg" width="225" height="225"/>
 
 A quick recap:
 
@@ -142,3 +139,9 @@ A quick recap:
 3. ReplicationController (`rc`) and ReplicaSet (`rs`) are meant to keep a number of pod-replicas running.
 4. `Deployment` takes care of rolling-updates and rollbacks.
 5. Scaling can be done manually (`kubectl scale`) or automatically (through a HPA)
+
+Further reading and fiddling:
+
+- [12 factor apps](https://12factor.net/)
+- [minikube](https://github.com/kubernetes/minikube)
+- [kubectx](https://github.com/ahmetb/kubectx)

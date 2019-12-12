@@ -1,32 +1,27 @@
-# K8s Workshop for beginners
+# Kubernetes Workshop for beginners
 
-Available on https://actfong.github.io/k8s-workshop/
+Available on https://fromatob.github.io/k8s-workshop/
 
-## GKE route:
+## Goals:
 
-[Part 1 - Intro with GKE](https://actfong.github.io/k8s-workshop/Part-1-IntroWithGKE)
+At the end of the workshop, you should be able to:
 
-[Part 2 - Pods](https://actfong.github.io/k8s-workshop/Part-2-Pods)
+- Setup a Google Kubernetes Engine (GKE)
+- Understand what a **Pod** is and how to interact with it
+- Ensure that a number of pods are running and rolling updates and rollbacks with **Deployments**
+- Expose your application to the outside world with **Services**
+- Scale your application with a **Horizontal Pod Autoscaler**
 
-[Part 3 - Services (GKE)](https://actfong.github.io/k8s-workshop/Part-3-ServicesWithGKE)
+## Agenda:
 
-[Part 4 - ReplicationControllers / ReplicaSets](https://actfong.github.io/k8s-workshop/Part-4-RC-and-RS)
+[0 - Setting the scene](/k8s-workshop/0-SettingTheScene)
 
-[Part 5 - Deployments](https://actfong.github.io/k8s-workshop/Part-5-Deployments)
+[1 - Hello World!](/k8s-workshop/1-HelloWorld)
 
-[Part 6 - Scaling your application](https://actfong.github.io/k8s-workshop/Part-6-Scaling)
+[2 - Pods](/k8s-workshop/2-Pods)
 
+[3 - Services](/k8s-workshop/3-Services)
 
-## Minikube route:
+[4 - Deployments](/k8s-workshop/4-Deployments)
 
-[Part 1 - Intro with Minikube](https://actfong.github.io/k8s-workshop/Part-1-IntroWithMinikube)
-
-[Part 2 - Pods](https://actfong.github.io/k8s-workshop/Part-2-Pods)
-
-[Part 3 - Services (Minikube)](https://actfong.github.io/k8s-workshop/Part-3-ServicesWithMinikube)
-
-[Part 4 - ReplicationControllers / ReplicaSets](https://actfong.github.io/k8s-workshop/Part-4-RC-and-RS)
-
-[Part 5 - Deployments](https://actfong.github.io/k8s-workshop/Part-5-Deployments)
-
-[Part 6 - Scaling your application](https://actfong.github.io/k8s-workshop/Part-6-Scaling)
+[5 - Scaling](/k8s-workshop/5-Scaling)
