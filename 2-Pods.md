@@ -183,6 +183,7 @@ docker ps                               # should list the container(s) within th
 Why are you seeing so many images and running containers though?
 </pre>
 </details>
+
 ---
 
 ### What you have learned in this section ###
