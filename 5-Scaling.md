@@ -114,10 +114,4 @@ A quick recap:
 2. Service (`svc`) objects enable access to your Pods from outside your cluster.
 3. ReplicationController (`rc`) and ReplicaSet (`rs`) are meant to keep a number of pod-replicas running.
 4. `Deployment` takes care of rolling-updates and rollbacks.
-5. Scaling can be done manually (`kubectl scale`) or automatically (through a HPA)
-
-Further reading and fiddling:
-
-- [12 factor apps](https://12factor.net/)
-- [minikube](https://github.com/kubernetes/minikube)
-- [kubectx](https://github.com/ahmetb/kubectx)
+5. Scaling can be done automatically (through a HPA)
