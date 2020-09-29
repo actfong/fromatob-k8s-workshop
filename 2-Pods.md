@@ -26,7 +26,7 @@ The imperative way has a few drawbacks:
 
 Therefore, in general, the *declarative way* is the preferred way to work with K8s.
 
-The application that we will be working with is called *tasman* and its source code can be found [here](https://github.com/actfong/tasman). It is a Sinatra application running on port 4567.
+The application that we will be working with is called *tasman* and its source code can be found [here](https://github.com/actfong/tasman) and the related Docker images are [here](https://hub.docker.com/r/actfong/tasman/tags). It is a Sinatra application running on port 4567.
 
 Get the example manifest file by cloning this repository:
 ```
