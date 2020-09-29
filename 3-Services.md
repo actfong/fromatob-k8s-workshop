@@ -94,9 +94,11 @@ If we have gone for a Service of type `LoadBalancer`, our app was reachable alre
 But instead of that, we could also create an `Ingress` on top of our existing Service. It would give us even more flexibility and everything will be documented in a declarative way.
   </div>
 </details>
+<br>
+<br>
+
 
 Is there another way to access the Pod instead of `wget {application-ip}:{application-port}`?
-
 
 <details>
   <summary>Read me</summary>
@@ -113,6 +115,8 @@ wget -O - http://tasman.default.svc.cluster.local:8080
 </pre>
 
   </div>
+  <br>
+
 </details>
 
 ### Ingress
