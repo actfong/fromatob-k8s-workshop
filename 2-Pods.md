@@ -122,7 +122,7 @@ With the info provided, could you get into our Pod's container(s) to run command
 kubectl exec -it {pod-name} -- /bin/sh
 # Once you are in:
 ps auxf
-# Does the process listed as PID 1 make sense to you?
+# Does the process list make sense to you?
 </pre>
 
 </details>

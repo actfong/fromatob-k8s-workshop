@@ -106,6 +106,17 @@ The `RollingUpdate` [strategy](https://kubernetes.io/docs/concepts/workloads/con
 
 The `maxUnavailable` and `maxSurge` parameters define how much below or above the specified replicas number we can go during the deploy. With `minReadySeconds`, we specify how long a Pod should have been running before we move on with spinning up the next one.
 
+To see what is different between our two manifest files, use 
+```
+diff tasman-deploy-1.yml tasman-deploy-2.yml
+```
+
+For Kubernetes to show you what will change when deploying `tasman-deploy-2.yml`, use:
+```
+kubectl diff -f tasman-deploy-2.yaml
+```
+
+
 The `kubectl apply` command can be used to update K8s resources, including `Deployment`. But this time, when you deploy this update, please add the `--record` flag. I will explain it to you later.
 
 ```

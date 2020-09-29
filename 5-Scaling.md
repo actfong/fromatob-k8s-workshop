@@ -85,7 +85,7 @@ kubectl apply -f tasman-hpa.yaml
 In the example above, we created a HPA that has a reference to the Deployment named "tasman".
 From that moment, the [`controller manager`](https://kubernetes.io/docs/admin/kube-controller-manager/) in the K8s Master will continously observe CPU usage of Pods managed by this Deployment and scales up/down, in order to match the CPU-target that is set in the `HPA` object.
 
-If you have followed all instructions, the amount of Pods should have gone from 6 to 3 by now. You can see that by looking at the `Events` in your Deployment with `kubectl describe deploy {deploy-name}`. Also pay attention that the `Replicas` attribute in your Deployment has changed.
+If you have followed all instructions, the amount of Pods should have gone down to 3 by now. You can see that by looking at the `Events` in your Deployment with `kubectl describe deploy {deploy-name}`. Also pay attention that the `Replicas` attribute in your Deployment has changed.
 
 And lastly, you can list the HPA's with `kubectl get hpa` and find out more with `kubectl describe hpa {hpa-name}`.
 
