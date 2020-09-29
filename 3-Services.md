@@ -67,7 +67,7 @@ And this will expose our service on 4567 and forward requests to Pod’s 4567 au
 
 With the manifest above, together with the Pod that you have previously spun up, you can now deploy your service object with:
 ```
-kubectl apply -f  tasman-svc.yml
+kubectl apply -f tasman-svc.yml
 ```
 Once deployed, inspect the service object with `kubectl describe svc {svc-name}` and pay attention to the field `Endpoints`. Do you know which IPs it refers to?
 
@@ -92,6 +92,26 @@ Just think about the possibility that you might have to expose multiple services
 If we have gone for a Service of type `LoadBalancer`, our app was reachable already. No extra work needed<br/>
 
 But instead of that, we could also create an `Ingress` on top of our existing Service. It would give us even more flexibility and everything will be documented in a declarative way.
+  </div>
+</details>
+
+Is there another way to access the Pod instead of `wget {application-ip}:{application-port}`?
+
+
+<details>
+  <summary>Read me</summary>
+  <div>
+<br>
+There is. Kubernetes gives each service a DNS address inside the cluster, that makes it easier to access them.
+
+<pre>
+# create another busybox
+kubectl run -it busybox --image=busybox --restart=Never -- /bin/sh
+
+# and then run wget inside of it
+wget -O - http://tasman.default.svc.cluster.local:8080
+</pre>
+
   </div>
 </details>
 

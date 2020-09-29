@@ -73,7 +73,6 @@ spec:
   minReplicas: 3
   maxReplicas: 8
   targetCPUUtilizationPercentage: 85
-
 ```
 
 Let's apply it with 

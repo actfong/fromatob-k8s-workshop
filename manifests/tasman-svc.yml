@@ -11,12 +11,3 @@ spec:                                   # defines what is in this resource
     # protocol: TCP                     # TCP by default
   selector:
     app: tasman
-
-  # From K8s documentation:
-  # If there are external IPs that route to one or more cluster nodes,
-  # Kubernetes services can be exposed on those externalIPs.
-  # Traffic that ingresses into the cluster with the external IP (as destination IP),
-  # on the service port, will be routed to one of the service endpoints.
-
-  # externalIPs:
-  #   - 192.168.99.100                    # my minikube-ip
