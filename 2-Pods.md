@@ -113,7 +113,7 @@ If it is a multi-container Pod, add the `-c` option and provide the name of the 
 
 ##### Mini Challenge #####
 
-With the info provided, could you get into our Pod's container(s) to run commands? Can you find out what the PID 1 is?
+With the info provided, could you get into our Pod's container(s) to run commands? Can you find out what processes are running in the container?
 
 <details>
 <summary>Possible Solution:</summary>
@@ -162,7 +162,7 @@ wget {application-ip}:{application-port}
 
 ##### Mini Challenge 2 #####
 
-From the video in the first chapter, you have learned that a `Node` is basically a VM where you deploy your containers to. In order to run these containers, it utilizes a container runtime (such as Docker) to pull images and run them as containers.
+As previously discussed, a `Node` is basically a VM where you deploy your containers to. In order to run these containers, it utilizes a container runtime (such as Docker) to pull images and run them as containers.
 
 Are you able to SSH into your `Node` and prove to yourself that it has indeed pulled the required image and has it running as a container?
 

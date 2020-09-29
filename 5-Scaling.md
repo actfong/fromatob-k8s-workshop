@@ -56,47 +56,10 @@ A `HPA` can be created with the `kubectl autoscale` command.
 
 As mentioned before, to scale up/down, a message should be sent to objects like RC, RS or Deployment. So when you create a `HPA`, a reference to such resource must be provided. You should also specify the maximum number of pods that a HPA can apply.
 
-In our case, a Deployment named *tasman* was the highest level construct that we have deployed (remember, it wraps around RS's which in trun wraps around Pods), so it make sense for us to create a HPA that targets a Deployment resource.
+In our case, a Deployment named *tasman* was the highest level construct that we have deployed (remember, it wraps around RS's which in trun wraps around Pods), so it makes sense for us to create a HPA that targets a Deployment resource.
 
-```
-# General syntax
-kubectl autoscale {resource-type}/{resource-name} --max={max-number-of-pods}
-
-# Let's apply the following to our Deployment tasman
-# By default, target cpu-utilization is set to 80%
-kubectl autoscale deploy/tasman --max=10 --min=3
-
-kubectl autoscale deploy/{deploy-name} --max={max-number-of-pods}  -min={min-number-of-pods}
-kubectl autoscale deploy/{deploy-name} --max={max-number-of-pods} --cpu-percent={target-CPU%}
-```
-
-In the examples above, we created a HPA that has a reference to the Deployment named "tasman".
-From that moment, the [`controller manager`](https://kubernetes.io/docs/admin/kube-controller-manager/) in the K8s Master will continously observe CPU usage of Pods managed by this Deployment and scales up/down, in order to match the CPU-target that is set in the `HPA` object.
-
-If you have followed all instructions, the amount of Pods should have gone from 6 to 3 by now. You can see that by looking at the `Events` in your Deployment with `kubectl describe deploy {deploy-name}`. Also pay attention that the `Replicas` attribute in your Deployment has changed.
-
-And lastly, you can list the HPA's with `kubectl get hpa` and find out more with `kubectl describe hpa {hpa-name}`.
-
-When you inspect with `kubectl describe hpa`, please pay attention to the attribtues `Reference` and `Metrics`.
-
-### Update your HPA
-
-So we just set the maximum to 10 pods and the minimum to 3 pods. With the target CPU utilization of 80% (default value).
-
-Now what if we want to modify the autoscale configurations? Could we run `kubectl autoscale` again? Let's try to set the minimum to 4 and maximum to 8, with target cpu-utilization at 85. Could we try the following:
-
-```
-kubectl autoscale deploy/tasman --max=8 --min=4 --cpu-percent=85
-```
-
-... and it won't work. Why? Because the `kubectl autoscale` command is meant for creating a new HPA resource, not to update an existing one.
-
-Do you remember in Part 1, where we talked about **imperative** vs **declarative** ways to create resources? The `kubectl autoscale` creates a HPA the imperative way (like `kubectl run` does with Pods).
-
-To do it in the `declarative` way, we need a manifest file, which we can apply by running `kubectl apply`.
-Try running `kubectl apply -f tasman-hpa.yaml` and see what happens...
-
-```
+The structure of a HPA for our deployment would look like this:
+```yml
 # tasman-hpa.yml
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -107,22 +70,35 @@ spec:
     apiVersion: apps/v1beta1
     kind: Deployment
     name: tasman
-  minReplicas: 4
+  minReplicas: 3
   maxReplicas: 8
   targetCPUUtilizationPercentage: 85
+
 ```
 
-After editing your HPA, you will see that the changes are applied to your `HPA` (check with `kubectl describe hpa tasman`). You will also see that the number of pods have changed to 4.
+Let's apply it with 
+
+```
+kubectl apply -f tasman-hpa.yaml
+```
+
+In the example above, we created a HPA that has a reference to the Deployment named "tasman".
+From that moment, the [`controller manager`](https://kubernetes.io/docs/admin/kube-controller-manager/) in the K8s Master will continously observe CPU usage of Pods managed by this Deployment and scales up/down, in order to match the CPU-target that is set in the `HPA` object.
+
+If you have followed all instructions, the amount of Pods should have gone from 6 to 3 by now. You can see that by looking at the `Events` in your Deployment with `kubectl describe deploy {deploy-name}`. Also pay attention that the `Replicas` attribute in your Deployment has changed.
+
+And lastly, you can list the HPA's with `kubectl get hpa` and find out more with `kubectl describe hpa {hpa-name}`.
+
+When you inspect with `kubectl describe hpa`, please pay attention to the attribtues `Reference` and `Metrics`.
 
 What happens if we eventually run out of nodes?
 
 ---
 
 ### What you have learned in this section
-1. Scale the number of Pods with `kubectl scale`
-2. Create a HorizontalPodAutoscaler with `kubectl autoscale`
-3. A HPA allows you to scale your application dynamically, based on CPU-utilization.
-4. Both `scale` and `autoscale` commands need to have a reference to a resource (RC,RS or Deploy). The pods managed by this resource will then be scaled as you specified.
+1. Scale the number of Pods of a Deployment
+2. Create a HorizontalPodAutoscaler 
+3. A HPA allows you to scale your application dynamically, based on memory and CPU-utilization.
 
 ---
 

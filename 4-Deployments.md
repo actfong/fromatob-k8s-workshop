@@ -33,7 +33,7 @@ Besides of that, you'd typically also define:
 Example:
 
 ```yml
-# tasman-deploy.yml
+# tasman-deploy-1.yml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -65,7 +65,7 @@ spec:
 
 Now you can deploy with:
 ```
-kubectl apply -f tasman-deploy.yml
+kubectl apply -f tasman-deploy-1.yml
 ```
 Congratulations, you have just deployed with Kubernetes!
 
@@ -109,7 +109,7 @@ The `maxUnavailable` and `maxSurge` parameters define how much below or above th
 The `kubectl apply` command can be used to update K8s resources, including `Deployment`. But this time, when you deploy this update, please add the `--record` flag. I will explain it to you later.
 
 ```
-kubectl apply -f tasman-deploy.yml --record
+kubectl apply -f tasman-deploy-2.yml --record
 ```
 
 If you want to know the status during the rollout, you can check with:

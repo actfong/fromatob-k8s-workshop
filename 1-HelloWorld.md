@@ -5,7 +5,7 @@ For our Hello World exercise, we will deploy an app containing a webserver (ngin
 In the following chapters we will go more into detail and will look into setting things up properly.
 
 GOALS:
-- Able to create, inspect and delete K8s resources (Pods ReplicaSets Deployments Services)
+- Able to create, inspect and delete K8s resources (Pods, ReplicaSets, Deployments, Services)
 - Get some insight into cluster operations
 - Verify that your application is running
 
