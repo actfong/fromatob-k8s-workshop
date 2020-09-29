@@ -80,22 +80,22 @@ Could you lookup for your Node's IP and the nodePort of our Service? Once you ha
 <details>
   <summary>Read me</summary>
   <div>
-<br>
-Theoretically, it should have worked... But it doesn't, why?<br>
+<br/>
+Theoretically, it should have worked... But it doesn't, why?<br/>
 
-If you were running on a "bare-metal" VM, it could have worked. However, due to GCE's firewall rules, these ports above 30000  are blocked by default.<br>
+If you were running on a "bare-metal" VM, it could have worked. However, due to GCE's firewall rules, these ports above 30000  are blocked by default.<br/>
 
 You could add a firewall rule with `gcloud compute firewall-rules create {name} `, but that's not ideal.
 
-Just think about the possibility that you might have to expose multiple services... And then for each one you would have to add a firewall rule!</br>
+Just think about the possibility that you might have to expose multiple services... And then for each one you would have to add a firewall rule!<br/>
 
 If we have gone for a Service of type `LoadBalancer`, our app was reachable already. No extra work needed<br/>
 
 But instead of that, we could also create an `Ingress` on top of our existing Service. It would give us even more flexibility and everything will be documented in a declarative way.
   </div>
 </details>
-<br>
-<br>
+<br/>
+<br/>
 
 
 Is there another way to access the Pod instead of `wget {application-ip}:{application-port}`?
